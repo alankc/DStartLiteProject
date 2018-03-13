@@ -4,6 +4,7 @@
 
 DStartLite::DStartLite()
 {
+    initial = true;
 }
 
 DStartLite::~DStartLite()
@@ -77,6 +78,51 @@ void DStartLite::MountTheMap(int8_t* map, int mapWidth, int mapHeight, double di
         }
     }
 }
+
+double DStartLite::TotalCost()
+{
+    if (initial)
+    {
+        initial = false;
+        last = start;
+        ComputeShortestPath();
+    }
+
+    if (start.data->g == INFINITY_CONST)
+        return INFINITY_CONST;
+
+    double sum = 0;
+    Vertex tmp = start;
+    Vertex newTmp;
+
+    while (tmp != goal)
+    {
+        auto succ = Succ(tmp);
+        double min = INFINITY_CONST;
+        double costMin = INFINITY_CONST;
+        for (auto i : succ)
+        {
+            Vertex sl;
+            sl.position = i;
+            sl.data = &map[i];
+
+            double cost = ComputeCost(start, sl);
+            double vlr = cost + sl.data->g;
+            
+            if (vlr < min)
+            {
+                min = vlr;
+                costMin = cost;
+                newTmp = sl;
+            }
+        }
+
+        tmp = newTmp;
+        sum += costMin;
+    }
+
+    return sum;
+}
 /**************************/
 
 /*DStart principal methods*/
@@ -95,6 +141,11 @@ void DStartLite::Initialize(VertexPosition start, VertexPosition goal)
 {
     U.Clear();
     km = 0;
+
+    for (auto i : this->map)
+    {
+        i.second.g = i.second.rhs = INFINITY_CONST;
+    }
 
     this->start.position = start;
     this->start.data = &map[start];
@@ -184,10 +235,9 @@ void DStartLite::ComputeShortestPath()
 
 bool DStartLite::GetNext(VertexPosition& nextPosition, std::vector<VertexUpdate> outdatedVertices)
 {
-    static bool inicial = true;
-    if (inicial)
+    if (initial)
     {
-        inicial = false;
+        initial = false;
         last = start;
         ComputeShortestPath();
         //PrintMap(true);

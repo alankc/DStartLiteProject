@@ -32,7 +32,7 @@
 #ifndef DSTARTLITE_H
 #define DSTARTLITE_H
 
-#include "defines.h"
+#include "PathPlanningDefines.h"
 #include "PriorityQueue.h"
 #include <vector>
 #include <unordered_map>
@@ -50,6 +50,8 @@ public:
     bool GetNext(VertexPosition& nextPosition, std::vector<VertexUpdate> outdatedVertices);
     
     void PrintMap(bool withPath);
+    
+    double TotalCost();
 private:
     CellMap map;
     int mapWidth;
@@ -64,6 +66,8 @@ private:
     Vertex last;
     
     double km;
+    
+    bool initial;
     
     Key CalcKey(Vertex v);
     void UpdateVertex(Vertex v);
