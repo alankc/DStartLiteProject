@@ -44,13 +44,13 @@ class DStartLite
 public:
     DStartLite();
     virtual ~DStartLite();
-    
+
     void MountTheMap(int8_t* map, int mapWidth, int mapHeight, double diagonalCost = 1.414, double nonDiagonalCost = 1.0, int pixPerMeter = 1, int newPixPerMeter = 1);
-    void Initialize(VertexPosition start, VertexPosition goal);  
+    void Initialize(VertexPosition start, VertexPosition goal);
     bool GetNext(VertexPosition& nextPosition, std::vector<VertexUpdate> outdatedVertices);
-    
+
     void PrintMap(bool withPath);
-    
+
     double TotalCost();
 private:
     CellMap map;
@@ -58,25 +58,25 @@ private:
     int mapHeight;
     double diagonalCost;
     double nonDiagonalCost;
-    
+
     PriorityQueue U;
-  
+
     Vertex start;
     Vertex goal;
     Vertex last;
-    
+
     double km;
-    
+
     bool initial;
-    
+
     Key CalcKey(Vertex v);
     void UpdateVertex(Vertex v);
     void ComputeShortestPath();
-    
+
     double ComputeRHS(Vertex v);
     double ComputeH(Vertex v1, Vertex v2);
     double ComputeCost(Vertex v1, Vertex v2);
-    
+
     std::vector<VertexPosition> Succ(Vertex v);
     std::vector<VertexPosition> Pred(Vertex v);
     //std::vector<VertexPosition> GetPath();

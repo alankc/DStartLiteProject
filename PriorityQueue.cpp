@@ -13,7 +13,7 @@ void PriorityQueue::Insert(VertexPosition vP, Key k)
     HashQueue::iterator it = hashQueue.find(vP);
     if (it == hashQueue.end())
     {
-        priorityQueue[k] = vP;
+        priorityQueue.insert(std::make_pair(k, vP));
         hashQueue[vP] = k;
     }
 }

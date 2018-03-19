@@ -106,7 +106,7 @@ double DStartLite::TotalCost()
             sl.position = i;
             sl.data = &map[i];
 
-            double cost = ComputeCost(start, sl);
+            double cost = ComputeCost(tmp, sl);
             double vlr = cost + sl.data->g;
             
             if (vlr < min)

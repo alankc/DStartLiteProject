@@ -20,7 +20,7 @@
 #include "PathPlanningDefines.h"
 
 typedef std::unordered_map<VertexPosition, Key> HashQueue;
-typedef std::map<Key, VertexPosition, std::less<Key>> Queue;
+typedef std::multimap<Key, VertexPosition, std::less<Key>> Queue;
 
 class PriorityQueue
 {
